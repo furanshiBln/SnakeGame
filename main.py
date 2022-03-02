@@ -16,6 +16,7 @@ scoreboard = Scoreboard()
 
 
 screen.listen()
+#if different keys should be used, amend the keys below
 screen.onkey(snake.up,"Up")
 screen.onkey(snake.left,"Left")
 screen.onkey(snake.right, "Right")
@@ -33,6 +34,7 @@ while game_is_on:
     if snake.head.distance(food) < 15:
         print("nom nom nom")
         food.refresh()
+        snake.extend()
         scoreboard.increase_score()
 
     #collision with wall
@@ -40,8 +42,11 @@ while game_is_on:
         game_is_on = False
         scoreboard.game_over()
 
-
-
-
+    #collision with tail
+    # to prevent game over because snake head is colliding with snake head, use sliced snake.segments
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
 
 screen.exitonclick()

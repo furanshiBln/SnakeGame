@@ -16,17 +16,25 @@ class Snake:
 
     def create_snake(self):
         for position in STARTING_POSITIONS:
-            new_segment = Turtle("square")
-            new_segment.color("white")
-            #if shapesize taken out: snake complete in one snake but very fat snake
-            new_segment.shapesize(stretch_len=0.5, stretch_wid=0.5)
-            new_segment.penup()
-            new_segment.goto(position)
-            self.segments.append(new_segment)
+            self.add_segment(position)
 
-#start,stop,step
+    def add_segment(self, position):
+        new_segment = Turtle("square")
+        # change snake colour by changing text
+        new_segment.color("white")
+        # if shapesize line commented out: snake complete in one snake but very fat snake
+        new_segment.shapesize(stretch_len=0.5, stretch_wid=0.5)
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        #adds new segment to (fat) snake, use negative one to count from end, position from Turtle class
+        self.add_segment(self.segments[-1].position())
+
 
     def move(self):
+        # start,stop,step
         for seg_num in range(len(self.segments) - 1, 0,-1):
             new_x = self.segments[seg_num - 1].xcor()
             new_y = self.segments[seg_num - 1].ycor()
